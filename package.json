@@ -1,0 +1,41 @@
+{
+  "name": "game-adventure",
+  "version": "1.0.0",
+  "description": "online portfolio",
+  "main": "init.js",
+  "devDependencies": {
+    "@types/express": "^4.17.7",
+    "@types/howler": "^2.2.4",
+    "@types/jquery": "^3.5.9",
+    "@types/node": "^13.13.15",
+    "@types/three": "^0.134.0",
+    "node-sass": "^6.0.0",
+    "prettier": "^1.19.1",
+    "sass": "^1.34.0",
+    "sass-loader": "^11.1.1",
+    "ts-loader": "^9.2.5",
+    "typescript": "^4.4.3",
+    "webpack": "^5.64.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0",
+    "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "@types/winston": "^2.4.4",
+    "babel-cli": "^6.26.0",
+    "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.4.0",
+    "winston": "^3.3.3"
+  },
+  "scripts": {
+    "start": "yarn dev && node dist/bundle.js",
+    "nodemon": "nodemon --watch . --exec \"ts-node -T\"",
+    "dev": "webpack --mode development",
+    "prod": "webpack --mode production",
+    "build": "rimraf ./dist && yarn dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "randolph gordon",
+  "license": "ISC"
+}

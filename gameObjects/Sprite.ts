@@ -7,6 +7,9 @@ interface config {
   currentAnimation?: any;
 }
 
+const xOffset: number = 16 - 8;
+const yOffset: number = 16 - 18;
+
 export class Sprite {
   image: HTMLImageElement;
   shadow: HTMLImageElement;
@@ -47,8 +50,8 @@ export class Sprite {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    const x: number = this.gameObject.x * 16 - 8;
-    const y: number = this.gameObject.y * 16 - 18;
+    const x: number = this.gameObject.x * xOffset;
+    const y: number = this.gameObject.y * yOffset;
 
     this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
 

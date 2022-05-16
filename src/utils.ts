@@ -1,42 +1,37 @@
-import { GameObject } from "./GameObject";
+import { Person } from "./Person";
+
+export const utils = {
+  withGrid(n: number) {
+    return n * 16;
+  }
+};
 
 export const OverWorldMaps: any = {
   DemoRoom: {
     lowerSrc: "/images/maps/DemoLower.png",
     upperSrc: "/images/maps/DemoUpper.png",
-    gameObject: {
-      hero: new GameObject({
-        x: 5,
-        y: 6,
+    gameObjects: {
+      hero: new Person({
+        x: utils.withGrid(5),
+        y: utils.withGrid(1),
         src: "/images/characters/people/hero.png"
-      }),
-      npc1: new GameObject({
-        x: 5,
-        y: 6,
-        src: "/images/characters/people/npc1.png"
       })
     }
   },
   Kitchen: {
     lowerSrc: "/images/maps/KitchenLower.png",
     upperSrc: "/images/maps/KitchenUpper.png",
-    gameObject: {
-      hero: new GameObject({
-        x: 3,
-        y: 1,
+    gameObjects: {
+      hero: new Person({
+        x: utils.withGrid(3),
+        y: utils.withGrid(6),
         src: "/images/characters/people/hero.png"
       }),
-      npc1: new GameObject({
-        x: 9,
-        y: 2,
-        src: "/images/characters/people/npc1.png"
+      erio: new Person({
+        x: utils.withGrid(5),
+        y: utils.withGrid(4),
+        src: "/images/characters/people/erio.png"
       })
     }
-  }
-};
-
-export const utils = {
-  withGrid(n: number) {
-    return n * 16;
   }
 };

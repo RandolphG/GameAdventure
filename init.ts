@@ -6,7 +6,7 @@ if (typeof document !== "undefined") {
     element: document.querySelector(".game-container")
   });
 
-  const gameInput = new GamepadInput();
-
   overworld.init();
+
+  const gameInput = new GamepadInput();
 }

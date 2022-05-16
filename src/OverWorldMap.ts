@@ -26,6 +26,6 @@ export class OverWorldMap {
   }
 
   drawUpperImage(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.lowerImage, 0, 0);
+    ctx.drawImage(this.upperImage, 0, 0);
   }
 }

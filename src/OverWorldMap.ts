@@ -1,18 +1,18 @@
-import { GameObject } from "./gameObjects/GameObject";
+import { GameObject } from "./GameObject";
 
-declare global {
-  interface Window {
-    OverWorldMap: any;
-  }
+interface config {
+  gameObjects: GameObject;
+  lowerSrc: string;
+  upperSrc: string;
 }
 
 export class OverWorldMap {
-  gameObject: GameObject;
+  gameObjects: GameObject;
   lowerImage: HTMLImageElement;
   upperImage: HTMLImageElement;
 
-  constructor(config: any) {
-    this.gameObject = config.gameObject;
+  constructor(config: config) {
+    this.gameObjects = config.gameObjects;
 
     this.lowerImage = new Image();
     this.lowerImage.src = config.lowerSrc;

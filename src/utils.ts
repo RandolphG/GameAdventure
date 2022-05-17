@@ -7,6 +7,13 @@ export const utils = {
 };
 
 export const gridSize = 32;
+export const xOffset: number = 8;
+export const yOffset: number = 18;
+export const nudgedXOffset: number = 10.5;
+export const nudgedYOffset: number = 6;
+export const capitalize = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
 
 export const OverWorldMaps: any = {
   DemoRoom: {
@@ -33,16 +40,9 @@ export const OverWorldMaps: any = {
       }),
       erio: new Person({
         x: utils.withGrid(5),
-        y: utils.withGrid(4),
+        y: utils.withGrid(10),
         src: "/images/characters/people/erio.png"
       })
     }
   }
 };
-
-export const capitalize = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
-
-export const xOffset: number = 8;
-export const yOffset: number = 18;

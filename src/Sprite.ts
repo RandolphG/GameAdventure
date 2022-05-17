@@ -1,5 +1,12 @@
 import { GameObject } from "./GameObject";
-import { gridSize, xOffset, yOffset } from "./utils";
+import {
+  gridSize,
+  nudgedXOffset,
+  nudgedYOffset,
+  utils,
+  xOffset,
+  yOffset
+} from "./utils";
 
 interface config {
   src: string;
@@ -124,9 +131,17 @@ export class Sprite {
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
-    const x: number = this.gameObject.x - xOffset;
-    const y: number = this.gameObject.y - yOffset;
+  draw(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
+    const x: number =
+      this.gameObject.x -
+      xOffset +
+      utils.withGrid(nudgedXOffset) -
+      cameraPerson.x;
+    const y: number =
+      this.gameObject.y -
+      yOffset +
+      utils.withGrid(nudgedYOffset) -
+      cameraPerson.y;
 
     this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
 

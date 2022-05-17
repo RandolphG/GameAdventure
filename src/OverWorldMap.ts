@@ -1,4 +1,5 @@
 import { GameObject } from "./GameObject";
+import { nudgedXOffset, utils } from "./utils";
 
 interface config {
   gameObjects: GameObject;
@@ -21,11 +22,19 @@ export class OverWorldMap {
     this.upperImage.src = config.upperSrc;
   }
 
-  drawLowerImage(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.lowerImage, 0, 0);
+  drawLowerImage(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
+    ctx.drawImage(
+      this.lowerImage,
+      utils.withGrid(nudgedXOffset) - cameraPerson.x,
+      utils.withGrid(nudgedXOffset) - cameraPerson.y
+    );
   }
 
-  drawUpperImage(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.upperImage, 0, 0);
+  drawUpperImage(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
+    ctx.drawImage(
+      this.upperImage,
+      utils.withGrid(nudgedXOffset) - cameraPerson.x,
+      utils.withGrid(nudgedXOffset) - cameraPerson.y
+    );
   }
 }

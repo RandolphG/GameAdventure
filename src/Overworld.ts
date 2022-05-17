@@ -25,18 +25,29 @@ export class Overworld {
       /* clear canvas on start game loop */
       this.ctx?.clearRect(0, 0, this.canvas!.width, this.canvas!.height);
 
-      /* draw lower layer */
-      this.map?.drawLowerImage(this.ctx!);
+      /* establish the camera person */
+      // @ts-ignore
+      const cameraPerson = this.map?.gameObjects.hero;
 
+      /* update all objects */
       if (this.map) {
         Object.values(this.map.gameObjects).forEach((object: GameObject) => {
           object.update({ arrow: this.directionInput?.direction });
-          object.sprite.draw(this.ctx!);
+        });
+      }
+
+      /* draw lower layer */
+      this.map?.drawLowerImage(this.ctx!, cameraPerson);
+
+      /* draw game objects */
+      if (this.map) {
+        Object.values(this.map.gameObjects).forEach((object: GameObject) => {
+          object.sprite.draw(this.ctx!, cameraPerson);
         });
       }
 
       /* draw Upper layer */
-      this.map?.drawUpperImage(this.ctx!);
+      this.map?.drawUpperImage(this.ctx!, cameraPerson);
 
       requestAnimationFrame(() => {
         step();

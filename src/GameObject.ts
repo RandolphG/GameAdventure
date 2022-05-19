@@ -1,3 +1,4 @@
+import { OverWorldMap } from "./OverWorldMap";
 import { Sprite } from "./Sprite";
 
 interface config {
@@ -27,5 +28,5 @@ export class GameObject implements IGameObject {
     this.direction = config.direction || "down";
   }
 
-  update(state?: { arrow: string }) {}
+  update(state?: { arrow: string; map?: OverWorldMap }) {}
 }

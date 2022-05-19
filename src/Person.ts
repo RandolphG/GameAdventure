@@ -1,5 +1,6 @@
 import { GameObject } from "./GameObject";
-import { capitalize } from "./utils";
+import { OverWorldMap } from "./OverWorldMap";
+import { utils } from "./utils";
 
 interface config {
   src: string;
@@ -9,7 +10,7 @@ interface config {
   isPlayerControlled?: boolean;
 }
 
-type state = { arrow: string };
+type state = { arrow: string; map?: OverWorldMap };
 
 export class Person extends GameObject {
   movingProgressRemaining: number;
@@ -45,6 +46,7 @@ export class Person extends GameObject {
       state?.arrow
     ) {
       this.direction = state.arrow;
+      console.log(state.map?.isSpaceTaken(this.x, this.y, this.direction));
 
       /* reset out counter */
       this.movingProgressRemaining = 16;
@@ -65,11 +67,11 @@ export class Person extends GameObject {
       this.movingProgressRemaining === 0 &&
       !state?.arrow
     ) {
-      this.sprite.setAnimation("idle" + capitalize(this.direction));
+      this.sprite.setAnimation("idle" + utils.capitalize(this.direction));
       return;
     }
     if (this.movingProgressRemaining > 0) {
-      this.sprite.setAnimation("walk" + capitalize(this.direction));
+      this.sprite.setAnimation("walk" + utils.capitalize(this.direction));
     }
   }
 }

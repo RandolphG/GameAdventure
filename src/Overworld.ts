@@ -32,7 +32,10 @@ export class Overworld {
       /* update all objects */
       if (this.map) {
         Object.values(this.map.gameObjects).forEach((object: GameObject) => {
-          object.update({ arrow: this.directionInput?.direction });
+          object.update({
+            arrow: this.directionInput?.direction,
+            map: this.map
+          });
         });
       }
 
@@ -57,8 +60,8 @@ export class Overworld {
   }
 
   init() {
-    console.log("Overworld init", this);
-    this.map = new OverWorldMap(OverWorldMaps.Kitchen);
+    console.log("%cOverworld init", "color:green;", this);
+    this.map = new OverWorldMap(OverWorldMaps.DemoRoom);
     this.directionInput = new DirectionInput();
     this.directionInput.init();
     this.directionInput.direction;

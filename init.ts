@@ -1,4 +1,3 @@
-import { GamepadInput } from "./src/inputs/gamepadInput";
 import { Overworld } from "./src/Overworld";
 
 if (typeof document !== "undefined") {
@@ -7,6 +6,4 @@ if (typeof document !== "undefined") {
   });
 
   overworld.init();
-
-  const gameInput = new GamepadInput();
 }

@@ -2,12 +2,12 @@ export class DirectionInput {
   heldDirection: any[];
   map: {
     ArrowUp: string;
-    KeyW: string;
     ArrowDown: string;
-    KeyS: string;
     ArrowLeft: string;
-    KeyA: string;
     ArrowRight: string;
+    KeyW: string;
+    KeyS: string;
+    KeyA: string;
     KeyD: string;
   };
 
@@ -15,12 +15,12 @@ export class DirectionInput {
     this.heldDirection = [];
     this.map = {
       ArrowUp: "up",
-      KeyW: "up",
       ArrowDown: "down",
-      KeyS: "down",
       ArrowLeft: "left",
-      KeyA: "left",
       ArrowRight: "right",
+      KeyW: "up",
+      KeyS: "down",
+      KeyA: "left",
       KeyD: "right"
     };
   }
@@ -31,7 +31,7 @@ export class DirectionInput {
 
   init() {
     document.addEventListener("keydown", (e: KeyboardEvent) => {
-      console.log(e.code);
+      // console.log(e.code);
       const dir = this.map[e.code];
 
       /* if we find a direction that does not exist in our way

@@ -61,9 +61,9 @@ export class Sprite {
     /* configuring animation & initial state */
     this.animation = config.animation || {
       idleDown: [[0, 0]],
-      idleRight: [[0, 0]],
-      idleUp: [[0, 0]],
-      idleLeft: [[0, 0]],
+      idleRight: [[0, 1]],
+      idleUp: [[0, 2]],
+      idleLeft: [[0, 3]],
       walkDown: [
         [1, 0],
         [0, 0],

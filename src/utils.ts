@@ -56,8 +56,8 @@ const OverWorldMaps: any = {
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
-        x: utils.withGrid(10),
-        y: utils.withGrid(10),
+        x: utils.withGrid(0),
+        y: utils.withGrid(0),
         src: "/images/characters/people/hero.png"
       }),
       erio: new Person({

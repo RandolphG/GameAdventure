@@ -46,4 +46,25 @@ export class OverWorldMap {
     console.log(`${x},${y}`);
     return this.walls[`${x},${y}`] || false;
   }
+
+  mountObjects() {
+    Object.values(this.gameObjects).forEach(object => {
+      /* determine if this object should actually mount */
+      object.mount(this);
+    });
+  }
+
+  addWall(x: number, y: number) {
+    this.walls[`${x},${y}`] = true;
+  }
+
+  removeWall(x: number, y: number) {
+    delete this.walls[`${x},${y}`];
+  }
+
+  moveWall(x: number, y: number, direction: string) {
+    const { x: newX, y: newY } = utils.nextPosition(x, y, direction);
+    this.removeWall(x, y);
+    this.addWall(newX, newY);
+  }
 }

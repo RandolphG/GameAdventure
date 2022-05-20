@@ -62,9 +62,11 @@ export class Overworld {
   init() {
     console.log("%cOverworld init", "color:green;", this);
     this.map = new OverWorldMap(OverWorldMaps.DemoRoom);
+    this.map.mountObjects();
+
     this.directionInput = new DirectionInput();
     this.directionInput.init();
-    this.directionInput.direction;
+    // this.directionInput.direction;
     this.startGameLoop();
   }
 }

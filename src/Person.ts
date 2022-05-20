@@ -78,6 +78,7 @@ export class Person extends GameObject {
         return;
       }
 
+      state.map?.moveWall(this.x, this.y, this.direction);
       /* reset out counter - ready to walk */
       this.movingProgressRemaining = 16;
     }

@@ -56,13 +56,13 @@ const OverWorldMaps: any = {
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
-        x: utils.withGrid(0),
-        y: utils.withGrid(0),
+        x: utils.withGrid(1),
+        y: utils.withGrid(4),
         src: "/images/characters/people/hero.png"
       }),
       erio: new Person({
         x: utils.withGrid(5),
-        y: utils.withGrid(10),
+        y: utils.withGrid(5),
         src: "/images/characters/people/erio.png"
       })
     },
@@ -85,7 +85,7 @@ const OverWorldMaps: any = {
       }),
       erio: new Person({
         x: utils.withGrid(5),
-        y: utils.withGrid(10),
+        y: utils.withGrid(5),
         src: "/images/characters/people/erio.png"
       })
     }

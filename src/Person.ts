@@ -11,15 +11,17 @@ interface config {
 }
 
 type state = { arrow: string; map?: OverWorldMap };
+type behavior = { type: string; direction: string };
+type directionUpdate = {
+  up: Array<number | string>;
+  down: Array<number | string>;
+  left: Array<number | string>;
+  right: Array<number | string>;
+};
 
 export class Person extends GameObject {
   movingProgressRemaining: number;
-  directionUpdate: {
-    up: Array<number | string>;
-    down: Array<number | string>;
-    left: Array<number | string>;
-    right: Array<number | string>;
-  };
+  directionUpdate: directionUpdate;
   isPlayerControlled: boolean;
 
   constructor(config: config) {
@@ -35,43 +37,49 @@ export class Person extends GameObject {
   }
 
   update(state: state) {
-    this.updatePosition();
-    this.updateSprite(state);
+    if (this.movingProgressRemaining > 0) {
+      this.updatePosition();
+    }
 
-    /* dont let characters change directions
-    until done moving to next cell */
+    /* don't let characters change directions
+      until done moving to next cell */
     if (
       this.isPlayerControlled &&
       this.movingProgressRemaining === 0 &&
       state?.arrow
     ) {
-      this.direction = state.arrow;
-      console.log(state.map?.isSpaceTaken(this.x, this.y, this.direction));
-
-      /* reset out counter */
-      this.movingProgressRemaining = 16;
+      this.startBehavior(state, { type: "walk", direction: state.arrow });
     }
+    this.updateSprite();
   }
 
   updatePosition() {
-    if (this.movingProgressRemaining > 0) {
-      const [property, change] = this.directionUpdate[this.direction];
-      this[property] += change;
-      this.movingProgressRemaining--;
-    }
+    const [property, change] = this.directionUpdate[this.direction];
+    this[property] += change;
+    this.movingProgressRemaining--;
   }
 
-  updateSprite(state: state) {
-    if (
-      this.isPlayerControlled &&
-      this.movingProgressRemaining === 0 &&
-      !state?.arrow
-    ) {
-      this.sprite.setAnimation("idle" + utils.capitalize(this.direction));
-      return;
-    }
+  updateSprite() {
     if (this.movingProgressRemaining > 0) {
       this.sprite.setAnimation("walk" + utils.capitalize(this.direction));
+      return;
+    }
+
+    this.sprite.setAnimation("idle" + utils.capitalize(this.direction));
+  }
+
+  startBehavior(state: state, behavior: behavior) {
+    /* set character direction to whatever behavior has */
+    this.direction = behavior.direction;
+    if (behavior.type === "walk") {
+      /* stop if the space is not free */
+      if (state.map?.isSpaceTaken(this.x, this.y, this.direction)) {
+        console.log(state.map?.isSpaceTaken(this.x, this.y, this.direction));
+        return;
+      }
+
+      /* reset out counter - ready to walk */
+      this.movingProgressRemaining = 16;
     }
   }
 }

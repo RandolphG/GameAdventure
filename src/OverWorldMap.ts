@@ -1,4 +1,5 @@
 import { GameObject } from "./GameObject";
+import { OverworldEvent } from "./OverworldEvent";
 import { nudgedXOffset, nudgedYOffset, utils } from "./utils";
 
 interface config {
@@ -8,11 +9,19 @@ interface config {
   walls: {};
 }
 
+type startCutSceneEvents = {
+  who: string;
+  type: string;
+  direction: string;
+  time: number;
+};
+
 export class OverWorldMap {
   gameObjects: GameObject;
   lowerImage: HTMLImageElement;
   upperImage: HTMLImageElement;
   walls: any;
+  isCutScenePlaying: boolean;
 
   constructor(config: config) {
     this.gameObjects = config.gameObjects;
@@ -23,6 +32,8 @@ export class OverWorldMap {
 
     this.upperImage = new Image();
     this.upperImage.src = config.upperSrc;
+
+    this.isCutScenePlaying = false;
   }
 
   drawLowerImage(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
@@ -43,15 +54,31 @@ export class OverWorldMap {
 
   isSpaceTaken(currentX: number, currentY: number, direction: string) {
     const { x, y } = utils.nextPosition(currentX, currentY, direction);
-    console.log(`${x},${y}`);
     return this.walls[`${x},${y}`] || false;
   }
 
   mountObjects() {
-    Object.values(this.gameObjects).forEach(object => {
+    Object.keys(this.gameObjects).forEach(objectKey => {
+      let objectToMount = this.gameObjects[objectKey];
+      objectToMount.id = objectKey;
+
       /* determine if this object should actually mount */
-      object.mount(this);
+      objectToMount.mount(this);
     });
+  }
+
+  /* start a loop of async events
+  await each one */
+  async startCutScene(events: startCutSceneEvents[]) {
+    this.isCutScenePlaying = true;
+
+    for (let i = 0; i < events.length; i++) {
+      const eventHandler = new OverworldEvent({ map: this, event: events[i] });
+
+      await eventHandler.init();
+    }
+
+    this.isCutScenePlaying = false;
   }
 
   addWall(x: number, y: number) {

@@ -1,11 +1,28 @@
 import { Person } from "./Person";
 
+type constants = {
+  gridSize: number;
+  xOffset: number;
+  yOffset: number;
+  nudgedXOffset: number;
+  nudgedYOffset: number;
+};
+
 enum Direction {
   Up = "up",
   Down = "down",
   Left = "left",
   Right = "right"
 }
+
+const constants: constants = {
+  gridSize: 32,
+  xOffset: 8,
+  yOffset: 18,
+  nudgedXOffset: 10.5,
+  nudgedYOffset: 6
+};
+
 const gridSize = 32;
 const xOffset: number = 8;
 const yOffset: number = 18;
@@ -46,6 +63,13 @@ const utils = {
       x,
       y
     };
+  },
+  emitEvent(eventName: string, detail: any) {
+    const event = new CustomEvent(eventName, {
+      detail
+    });
+
+    document.dispatchEvent(event);
   }
 };
 
@@ -63,7 +87,13 @@ const OverWorldMaps: any = {
       erio: new Person({
         x: utils.withGrid(5),
         y: utils.withGrid(5),
-        src: "/images/characters/people/erio.png"
+        src: "/images/characters/people/erio.png",
+        behaviors: [
+          { type: "walk", direction: "left", time: 500 },
+          { type: "walk", direction: "down", time: 900 },
+          { type: "walk", direction: "right", time: 600 },
+          { type: "walk", direction: "up", time: 1200 }
+        ]
       })
     },
     walls: {
@@ -71,23 +101,6 @@ const OverWorldMaps: any = {
       [utils.asGridCoords(8, 6)]: true,
       [utils.asGridCoords(7, 7)]: true,
       [utils.asGridCoords(8, 7)]: true
-    }
-  },
-  Kitchen: {
-    lowerSrc: "/images/maps/KitchenLower.png",
-    upperSrc: "/images/maps/KitchenUpper.png",
-    gameObjects: {
-      hero: new Person({
-        isPlayerControlled: true,
-        x: utils.withGrid(3),
-        y: utils.withGrid(6),
-        src: "/images/characters/people/hero.png"
-      }),
-      erio: new Person({
-        x: utils.withGrid(5),
-        y: utils.withGrid(5),
-        src: "/images/characters/people/erio.png"
-      })
     }
   }
 };

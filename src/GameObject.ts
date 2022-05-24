@@ -7,6 +7,7 @@ interface config {
   x: number;
   y: number;
   direction?: string;
+  isPlayerControlled?: boolean;
   behaviors?: behaviors;
 }
 
@@ -18,9 +19,15 @@ interface IGameObject {
   behaviors?: behaviors;
 }
 
-type behaviors = Array<event>;
+type behavior = {
+  who?: string;
+  type: string;
+  direction: string;
+  time?: number;
+  retry?: boolean;
+};
 
-type event = { who: string; type: string; direction: string; time: number };
+type behaviors = Array<behavior>;
 
 export class GameObject implements IGameObject {
   id: string | null;
@@ -31,6 +38,7 @@ export class GameObject implements IGameObject {
   isMounted: boolean;
   behaviors: behaviors;
   behaviorsIndex: number;
+  isStanding: boolean;
 
   constructor(config: config) {
     this.id = null;
@@ -41,6 +49,7 @@ export class GameObject implements IGameObject {
     this.direction = config.direction || "down";
     this.behaviors = config.behaviors || [];
     this.behaviorsIndex = 0;
+    this.isStanding = false;
   }
 
   mount(map: OverWorldMap) {
@@ -56,7 +65,11 @@ export class GameObject implements IGameObject {
   async doBehaviorEvent(map: OverWorldMap) {
     /* don't do anything if there is a more important cutscene or
      *  I don't have config to do anything anyway */
-    if (map.isCutScenePlaying || this.behaviors.length === 0) {
+    if (
+      map.isCutScenePlaying ||
+      this.behaviors.length === 0 ||
+      this.isStanding
+    ) {
       return;
     }
 

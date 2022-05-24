@@ -8,6 +8,8 @@ type constants = {
   nudgedYOffset: number;
 };
 
+type detail = { whoId: string };
+
 enum Direction {
   Up = "up",
   Down = "down",
@@ -22,12 +24,6 @@ const constants: constants = {
   nudgedXOffset: 10.5,
   nudgedYOffset: 6
 };
-
-const gridSize = 32;
-const xOffset: number = 8;
-const yOffset: number = 18;
-const nudgedXOffset: number = 10.5;
-const nudgedYOffset: number = 6;
 
 const utils = {
   capitalize(str: string) {
@@ -64,8 +60,8 @@ const utils = {
       y
     };
   },
-  emitEvent(eventName: string, detail: any) {
-    const event = new CustomEvent(eventName, {
+  emitEvent(eventName: string, detail: detail) {
+    const event: CustomEvent<{ whoId: string }> = new CustomEvent(eventName, {
       detail
     });
 
@@ -105,12 +101,4 @@ const OverWorldMaps: any = {
   }
 };
 
-export {
-  utils,
-  gridSize,
-  xOffset,
-  yOffset,
-  nudgedXOffset,
-  nudgedYOffset,
-  OverWorldMaps
-};
+export { utils, OverWorldMaps, constants };

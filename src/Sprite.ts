@@ -1,12 +1,5 @@
 import { GameObject } from "./GameObject";
-import {
-  gridSize,
-  nudgedXOffset,
-  nudgedYOffset,
-  utils,
-  xOffset,
-  yOffset
-} from "./utils";
+import { utils, constants } from "./utils";
 
 interface config {
   src: string;
@@ -134,13 +127,13 @@ export class Sprite {
   draw(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
     const x: number =
       this.gameObject.x -
-      xOffset +
-      utils.withGrid(nudgedXOffset) -
+      constants.xOffset +
+      utils.withGrid(constants.nudgedXOffset) -
       cameraPerson.x;
     const y: number =
       this.gameObject.y -
-      yOffset +
-      utils.withGrid(nudgedYOffset) -
+      constants.yOffset +
+      utils.withGrid(constants.nudgedYOffset) -
       cameraPerson.y;
 
     this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
@@ -151,14 +144,14 @@ export class Sprite {
     this.isLoaded &&
       ctx.drawImage(
         this.image,
-        frameX * gridSize,
-        frameY * gridSize,
-        gridSize,
-        gridSize,
+        frameX * constants.gridSize,
+        frameY * constants.gridSize,
+        constants.gridSize,
+        constants.gridSize,
         x,
         y,
-        gridSize,
-        gridSize
+        constants.gridSize,
+        constants.gridSize
       );
 
     this.updateAnimationProgress();

@@ -2,18 +2,28 @@ import { GameObject } from "./GameObject";
 import { OverWorldMap } from "./OverWorldMap";
 import { utils } from "./utils";
 
-interface config {
+interface personConfig {
   src: string;
   x: number;
   y: number;
   direction?: string;
   isPlayerControlled?: boolean;
-  behaviors?: Array<{ type: string; direction: string; time: number }>;
+  behaviors?: personBehaviors;
 }
 
 type state = { arrow?: string; map?: OverWorldMap };
 
-type behavior = {
+type personBehaviors = Array<personBehavior>;
+
+type startBehavior = {
+  type: string;
+  direction: string;
+  time?: number;
+  retry?: boolean;
+};
+
+type personBehavior = {
+  who?: string;
   type: string;
   direction: string;
   time?: number;
@@ -28,11 +38,11 @@ type directionUpdate = {
 };
 
 export class Person extends GameObject {
-  movingProgressRemaining: number;
   directionUpdate: directionUpdate;
+  movingProgressRemaining: number;
   isPlayerControlled: boolean;
 
-  constructor(config: config) {
+  constructor(config: personConfig) {
     super(config);
     this.movingProgressRemaining = 0;
     this.isPlayerControlled = config.isPlayerControlled || false;
@@ -42,6 +52,7 @@ export class Person extends GameObject {
       left: ["x", -1],
       right: ["x", 1]
     };
+    this.isStanding = false;
   }
 
   update(state: { arrow: string; map?: OverWorldMap }) {
@@ -69,7 +80,7 @@ export class Person extends GameObject {
 
     if (this.movingProgressRemaining === 0) {
       /* we finished walking */
-      utils.emitEvent("person-walking-done", { whoId: this.id });
+      utils.emitEvent("person-walking-done", { whoId: this.id! });
     }
   }
 
@@ -82,7 +93,7 @@ export class Person extends GameObject {
     this.sprite.setAnimation("idle" + utils.capitalize(this.direction));
   }
 
-  startBehavior(state: state, behavior: behavior) {
+  startBehavior(state: state, behavior: startBehavior) {
     /* set character direction to whatever behavior has */
     this.direction = behavior.direction;
 
@@ -104,8 +115,12 @@ export class Person extends GameObject {
     }
 
     if (behavior.type === "stand") {
+      this.isStanding = true;
+
       setTimeout(() => {
-        utils.emitEvent("person-standing-done", { whoId: this.id });
+        utils.emitEvent("person-standing-done", { whoId: this.id! });
+
+        this.isStanding = false;
       }, behavior.time);
     }
   }

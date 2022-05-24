@@ -1,4 +1,5 @@
 import { OverWorldMap } from "./OverWorldMap";
+import { TextMessage } from "./TextMessage";
 
 interface config {
   map: OverWorldMap;
@@ -6,10 +7,11 @@ interface config {
 }
 
 export type eventConfig = {
-  who: string;
+  who?: string;
   type: string;
-  direction: string;
-  time: number;
+  direction?: string;
+  time?: number;
+  text?: string;
 };
 
 export class OverworldEvent {
@@ -29,7 +31,7 @@ export class OverworldEvent {
   }
 
   stand(resolve: () => {}) {
-    const who = this.map.gameObjects[this.event.who];
+    const who = this.map.gameObjects[this.event.who?];
     const state = { map: this.map };
 
     who.startBehavior(state, {
@@ -51,7 +53,7 @@ export class OverworldEvent {
   }
 
   walk(resolve: () => {}) {
-    const who = this.map.gameObjects[this.event.who];
+    const who = this.map.gameObjects[this.event.who?];
     const state = { map: this.map };
 
     who.startBehavior(state, {
@@ -70,5 +72,14 @@ export class OverworldEvent {
     };
 
     document.addEventListener("person-walking-done", completeHandler);
+  }
+
+  textMessage(resolve: () => {}) {
+    const message = new TextMessage({
+      text: this.event.text,
+      onComplete: () => resolve()
+    });
+
+    message.init(document.querySelector(".game-container")!);
   }
 }

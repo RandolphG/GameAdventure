@@ -1,0 +1,39 @@
+:root {
+    --menu-background: #333;
+    --menu-border-color: #fff;
+    --menu-font-color: #fff;
+}
+
+.TextMessage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 36px;
+    font-size: 12px;
+    padding: 4px;
+    background: var(--menu-background);
+    border-top: 1px solid var(--menu-border-color);
+    color: var(--menu-font-color);
+}
+
+.TextMessage_p {
+    margin: 0;
+    font-size: 12px;
+}
+
+.TextMessage_button {
+    margin: 0;
+    font-size: 12px;
+    padding: 0;
+    -webkit-appearance: none;
+    background: none;
+    border: 0;
+    color: var(--menu-font-color);
+    font-family: inherit;
+    cursor: pointer;
+
+    position: absolute;
+    right: 2px;
+    bottom: 0;
+}

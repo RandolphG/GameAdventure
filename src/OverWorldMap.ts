@@ -1,6 +1,6 @@
 import { GameObject } from "./GameObject";
 import { OverworldEvent } from "./OverworldEvent";
-import { nudgedXOffset, nudgedYOffset, utils } from "./utils";
+import { constants, utils } from "./utils";
 
 interface config {
   gameObjects: GameObject;
@@ -10,10 +10,11 @@ interface config {
 }
 
 type startCutSceneEvents = {
-  who: string;
+  who?: string;
   type: string;
-  direction: string;
-  time: number;
+  direction?: string;
+  time?: number;
+  text?: string;
 };
 
 export class OverWorldMap {
@@ -39,16 +40,16 @@ export class OverWorldMap {
   drawLowerImage(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
     ctx.drawImage(
       this.lowerImage,
-      utils.withGrid(nudgedXOffset) - cameraPerson.x,
-      utils.withGrid(nudgedYOffset) - cameraPerson.y
+      utils.withGrid(constants.nudgedXOffset) - cameraPerson.x,
+      utils.withGrid(constants.nudgedYOffset) - cameraPerson.y
     );
   }
 
   drawUpperImage(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
     ctx.drawImage(
       this.upperImage,
-      utils.withGrid(nudgedXOffset) - cameraPerson.x,
-      utils.withGrid(nudgedYOffset) - cameraPerson.y
+      utils.withGrid(constants.nudgedXOffset) - cameraPerson.x,
+      utils.withGrid(constants.nudgedYOffset) - cameraPerson.y
     );
   }
 
@@ -79,6 +80,11 @@ export class OverWorldMap {
     }
 
     this.isCutScenePlaying = false;
+
+    /* reset NPC to do their idle behavior */
+    Object.values(this.gameObjects).forEach(object => {
+      object.doBehaviorEvent(this);
+    });
   }
 
   addWall(x: number, y: number) {

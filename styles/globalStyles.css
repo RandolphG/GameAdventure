@@ -1,24 +1,34 @@
+/* global font style */
+:root {
+    --font-main: 'operatorMonoBoldItalic', sans-serif;
+    --boxShadow: 0 4px 6px rgba(0, 0, 0, 0.52), 0 3px 4px rgba(0, 0, 0, 0.44);
+    --menu-background: #333;
+    --menu-border-color: #fff;
+    --menu-font-color: #fff;
+}
+
 * {
-  box-sizing:border-box;
+    box-sizing: border-box;
 }
 
 body {
-  background: #333;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
+    background: #333;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    font-family: var(--font-main);
 }
 
 .game-container {
-  position: relative; 
-  width: 352px;
-  height: 198px;
-  margin: 0 auto;
-  outline: 1px solid #fff;
+    position: relative;
+    width: 352px;
+    height: 198px;
+    margin: 0 auto;
+    outline: 1px solid #fff;
 
-  transform: scale(3) translateY(50%);
+    transform: scale(3) translateY(50%);
 }
 
 .game-container canvas {
-  image-rendering: pixelated;
+    image-rendering: pixelated;
 }

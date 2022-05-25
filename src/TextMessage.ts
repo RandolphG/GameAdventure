@@ -1,8 +1,8 @@
-type textMessage = { text: any; onComplete: any };
+type textMessage = { text: string | undefined; onComplete: () => void };
 
 export class TextMessage {
-  text: any;
-  onComplete: any;
+  text: string | undefined;
+  onComplete: () => void;
   element: HTMLDivElement | null;
 
   constructor({ text, onComplete }: textMessage) {
@@ -13,7 +13,7 @@ export class TextMessage {
 
   createElement() {
     this.element = document.createElement("div");
-    this.element.classList.add("textMessage");
+    this.element.classList.add("TextMessage");
     this.element.innerHTML = `
         <p class="TextMessage_p">${this.text}</p>
         <button class="TextMessage_button">Next</button>

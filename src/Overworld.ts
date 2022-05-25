@@ -70,16 +70,17 @@ export class Overworld {
 
     this.directionInput = new DirectionInput();
     this.directionInput.init();
+
     this.startGameLoop();
     this.map.startCutScene([
-      { type: "textMessage", text: "Hello World" },
-      { who: "hero", type: "walk", direction: "down" },
-      { who: "hero", type: "walk", direction: "down" },
-      { who: "hero", type: "walk", direction: "right" },
-      { who: "hero", type: "walk", direction: "right" },
-      { who: "hero", type: "walk", direction: "right" },
-      { who: "hero", type: "walk", direction: "right" },
-      { who: "hero", type: "stand", direction: "up" }
+      { type: "textMessage", text: "Hello World" }
+      // { who: "hero", type: "walk", direction: "down" },
+      // { who: "hero", type: "walk", direction: "down" },
+      // { who: "hero", type: "walk", direction: "right" },
+      // { who: "hero", type: "walk", direction: "right" },
+      // { who: "hero", type: "walk", direction: "right" },
+      // { who: "hero", type: "walk", direction: "right" },
+      // { who: "hero", type: "stand", direction: "up" }
     ]);
   }
 }

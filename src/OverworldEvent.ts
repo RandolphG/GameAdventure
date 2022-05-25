@@ -31,7 +31,7 @@ export class OverworldEvent {
   }
 
   stand(resolve: () => {}) {
-    const who = this.map.gameObjects[this.event.who?];
+    const who = this.map.gameObjects[this.event.who!];
     const state = { map: this.map };
 
     who.startBehavior(state, {
@@ -53,7 +53,7 @@ export class OverworldEvent {
   }
 
   walk(resolve: () => {}) {
-    const who = this.map.gameObjects[this.event.who?];
+    const who = this.map.gameObjects[this.event.who!];
     const state = { map: this.map };
 
     who.startBehavior(state, {

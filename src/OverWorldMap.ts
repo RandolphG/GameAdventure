@@ -74,6 +74,7 @@ export class OverWorldMap {
     this.isCutScenePlaying = true;
 
     for (let i = 0; i < events.length; i++) {
+      //@ts-ignore
       const eventHandler = new OverworldEvent({ map: this, event: events[i] });
 
       await eventHandler.init();

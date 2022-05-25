@@ -2,7 +2,7 @@
 :root {
     --font-main: 'operatorMonoBoldItalic', sans-serif;
     --boxShadow: 0 4px 6px rgba(0, 0, 0, 0.52), 0 3px 4px rgba(0, 0, 0, 0.44);
-    --menu-background: #333;
+    --menu-background: rgba(0, 0, 0, 0.5);
     --menu-border-color: #fff;
     --menu-font-color: #fff;
 }

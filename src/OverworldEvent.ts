@@ -9,8 +9,13 @@ interface config {
 export type eventConfig = {
   who?: string;
   type: string;
-  direction?: string;
+  direction: string;
   time?: number;
+  text?: string;
+};
+
+export type textMessageEventConfig = {
+  type: string;
   text?: string;
 };
 

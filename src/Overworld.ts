@@ -73,7 +73,7 @@ export class Overworld {
 
     this.startGameLoop();
     this.map.startCutScene([
-      { type: "textMessage", text: "Hello World" }
+      { type: "textMessage", text: "Hey how are you doing?" }
       // { who: "hero", type: "walk", direction: "down" },
       // { who: "hero", type: "walk", direction: "down" },
       // { who: "hero", type: "walk", direction: "right" },

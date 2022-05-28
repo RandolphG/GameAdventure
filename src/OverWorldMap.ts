@@ -7,6 +7,7 @@ interface config {
   lowerSrc: string;
   upperSrc: string;
   walls: {};
+  cutsceneSpaces: {};
 }
 
 type startCutSceneEvents = {
@@ -18,13 +19,17 @@ type startCutSceneEvents = {
 };
 
 export class OverWorldMap {
+  overworld: any;
   gameObjects: GameObject;
   lowerImage: HTMLImageElement;
   upperImage: HTMLImageElement;
   walls: any;
   isCutScenePlaying: boolean;
+  cutsceneSpaces;
 
   constructor(config: config) {
+    this.overworld = null;
+    this.cutsceneSpaces = config.cutsceneSpaces || {};
     this.gameObjects = config.gameObjects;
     this.walls = config.walls || {};
 
@@ -100,5 +105,29 @@ export class OverWorldMap {
     const { x: newX, y: newY } = utils.nextPosition(x, y, direction);
     this.removeWall(x, y);
     this.addWall(newX, newY);
+  }
+
+  checkForActionCutscene() {
+    const hero = this.gameObjects["hero"];
+    const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction);
+    const match = Object.values(this.gameObjects).find(object => {
+      return `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`;
+    });
+
+    if (!this.isCutScenePlaying && match && match.talking.length) {
+      console.log("MATCH.TALKING[0]", match.talking[0]);
+      const ignore = this.startCutScene(match.talking[0].events);
+    }
+
+    console.log(match);
+  }
+  checkForFootstepCutscene() {
+    const hero = this.gameObjects["hero"];
+    const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
+    console.log("match", match);
+
+    if (!this.isCutScenePlaying && match) {
+      const ignore = this.startCutScene(match[0].events);
+    }
   }
 }

@@ -9,6 +9,7 @@ interface config {
   direction?: string;
   isPlayerControlled?: boolean;
   behaviors?: behaviors;
+  talking?: Talking[];
 }
 
 interface IGameObject {
@@ -18,6 +19,8 @@ interface IGameObject {
   direction: string;
   behaviors?: behaviors;
 }
+
+type Talking = { events: { type: string; text: string; faceHero?: string }[] };
 
 type behavior = {
   who?: string;
@@ -39,6 +42,7 @@ export class GameObject implements IGameObject {
   behaviors: behaviors;
   behaviorsIndex: number;
   isStanding: boolean;
+  talking: Talking[];
 
   constructor(config: config) {
     this.id = null;
@@ -50,6 +54,7 @@ export class GameObject implements IGameObject {
     this.behaviors = config.behaviors || [];
     this.behaviorsIndex = 0;
     this.isStanding = false;
+    this.talking = config.talking || [];
   }
 
   mount(map: OverWorldMap) {

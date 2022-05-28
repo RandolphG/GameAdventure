@@ -1,5 +1,6 @@
 import { DirectionInput } from "./DirectionInput";
 import { GameObject } from "./GameObject";
+import { KeyPressListener } from "./KeyPressListener";
 import { OverWorldMap } from "./OverWorldMap";
 import { OverWorldMaps } from "./utils";
 
@@ -63,24 +64,51 @@ export class Overworld {
     step();
   }
 
+  bindActionInput() {
+    new KeyPressListener("Enter", () => {
+      /*Is there a person to talk to? */
+      this.map!.checkForActionCutscene();
+    });
+  }
+
+  bindHeroPositionCheck() {
+    document.addEventListener("person-walking-done", (event: any) => {
+      if (event.detail.whoId === "hero") {
+        console.log("NEW HERO POSITION");
+        /* hero's position has changed */
+        this.map!.checkForFootstepCutscene();
+      }
+    });
+  }
+
+  startMap(mapConfig: any) {
+    console.log("Change Map to: ", mapConfig);
+    this.map = new OverWorldMap(mapConfig);
+    this.map.overworld = this;
+    this.map.mountObjects();
+  }
+
   init() {
     console.log("%cOverworld init", "color:green;", this);
-    this.map = new OverWorldMap(OverWorldMaps.DemoRoom);
-    this.map.mountObjects();
+    this.startMap(OverWorldMaps.DemoRoom);
+
+    this.bindActionInput();
+    this.bindHeroPositionCheck();
 
     this.directionInput = new DirectionInput();
     this.directionInput.init();
 
     this.startGameLoop();
-    this.map.startCutScene([
+
+    /*this.map.startCutScene([
       { type: "textMessage", text: "Hey how are you doing?" }
-      // { who: "hero", type: "walk", direction: "down" },
-      // { who: "hero", type: "walk", direction: "down" },
-      // { who: "hero", type: "walk", direction: "right" },
-      // { who: "hero", type: "walk", direction: "right" },
-      // { who: "hero", type: "walk", direction: "right" },
-      // { who: "hero", type: "walk", direction: "right" },
-      // { who: "hero", type: "stand", direction: "up" }
-    ]);
+      { who: "hero", type: "walk", direction: "down" },
+      { who: "hero", type: "walk", direction: "down" },
+      { who: "hero", type: "walk", direction: "right" },
+      { who: "hero", type: "walk", direction: "right" },
+      { who: "hero", type: "walk", direction: "right" },
+      { who: "hero", type: "walk", direction: "right" },
+      { who: "hero", type: "stand", direction: "up" }
+    ]);*/
   }
 }

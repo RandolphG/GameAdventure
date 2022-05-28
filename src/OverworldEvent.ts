@@ -1,5 +1,6 @@
 import { OverWorldMap } from "./OverWorldMap";
 import { TextMessage } from "./TextMessage";
+import { OverWorldMaps, utils } from "./utils";
 
 interface config {
   map: OverWorldMap;
@@ -12,6 +13,8 @@ export type eventConfig = {
   direction: string;
   time?: number;
   text?: string;
+  faceHero?: string;
+  map?: string;
 };
 
 export type textMessageEventConfig = {
@@ -80,11 +83,25 @@ export class OverworldEvent {
   }
 
   textMessage(resolve: () => {}) {
+    /* face the hero */
+    if (this.event.faceHero) {
+      const obj = this.map.gameObjects[this.event.faceHero!];
+      obj.direction = utils.oppositeDirection(
+        this.map.gameObjects["hero"].direction
+      );
+    }
+
     const message = new TextMessage({
       text: this.event.text,
       onComplete: () => resolve()
     });
 
     message.init(document.querySelector(".game-container")!);
+  }
+
+  /* instantiate the new map */
+  changeMap(resolve: any) {
+    this.map.overworld.startMap(OverWorldMaps[this.event.map!]);
+    resolve();
   }
 }

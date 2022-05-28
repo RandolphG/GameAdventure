@@ -9,7 +9,10 @@ interface personConfig {
   direction?: string;
   isPlayerControlled?: boolean;
   behaviors?: personBehaviors;
+  talking?: Talking[];
 }
+
+type Talking = { events: { type: string; text: string; faceHero?: string }[] };
 
 type state = { arrow?: string; map?: OverWorldMap };
 
